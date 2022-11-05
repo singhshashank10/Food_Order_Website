@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Foods } from 'src/app/shared/models/food';
+import { Tag } from 'src/app/shared/models/Tag';
 
 @Injectable({
   providedIn: 'root'
@@ -8,16 +9,23 @@ export class FoodService {
 
   constructor() { }
 
+  getAllFoodsByTag(tag: string): Foods[] {
+    return tag == "All" ? this.getAll() : this.getAll().filter(food => food.tags?.includes(tag));
+  }
+
+  getAllTag(): Tag[] {
+    return [
+      { name: "FastFood", count: 4 },
+      { name: "Non-Veg", count: 2 },
+      { name: "Snacks", count: 3 },
+      { name: "Veg", count: 4 },
+      { name: "South Indian", count: 2 },
+      { name: "All", count: 8 }
+    ]
+  }
+
   getAll(): Foods[] {
     return [
-      // '/assets/food-1.jpg',
-      // '/assets/food-2.jpg',
-      // '/assets/food-3.jpg',
-      // '/assets/food-4.jpg',
-      // '/assets/food-5.jpg',
-      // '/assets/food-6.jpg',
-      // '/assets/food-7.jpg',
-      // '/assets/food-8.jpg',
       {
         id: 1,
         price: 80,
@@ -46,7 +54,7 @@ export class FoodService {
         name: "Cheese Balls",
         favorite: false,
         star: 4.5,
-        tags: ["Snacks"],
+        tags: ["Snacks", "Veg"],
         imageUrl: '/assets/food-3.jpg',
         cookTime: "10-15 min",
         origins: ["European"]
@@ -79,7 +87,7 @@ export class FoodService {
         name: "French Fries",
         favorite: false,
         star: 3.5,
-        tags: ["FastFood", "Snacks"],
+        tags: ["FastFood", "Snacks", "Veg"],
         imageUrl: '/assets/food-6.jpg',
         cookTime: "5-10 min",
         origins: ["Amarican", "European",]
@@ -101,7 +109,7 @@ export class FoodService {
         name: "Idli Sambhar",
         favorite: false,
         star: 5,
-        tags: ["South India"],
+        tags: ["South Indian"],
         imageUrl: '/assets/food-8.jpg',
         cookTime: "25-30 min",
         origins: ["Indian"]
